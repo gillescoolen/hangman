@@ -13,37 +13,39 @@ import java.util.Random;
 public class Match {
     private Player player;
     private Player opponent;
+    private Integer chosenWordLength;
 
-    /**
-     * @param player
-     * @param opponent
-     */
-    public Match(Player player, Player opponent) {
+    public Match(Player player, Player opponent, Integer chosenWordLength) {
         this.player = player;
         this.opponent = opponent;
+        this.chosenWordLength = chosenWordLength;
     }
 
-    public void start() {
+    public void create() {
         Game playerGame = this.createGame(this.player);
         Game opponentGame = this.createGame(this.opponent);
+        
+        Random random = new Random();
 
-        System.out.println(playerGame.getWord());
-        System.out.println(opponentGame.getWord());
+        if (random.nextInt(1) == 0) {
+            playerGame.start();
+            opponentGame.start();
+        } else {
+            opponentGame.start();
+            playerGame.start();
+        }
     }
 
     private Game createGame(Player participant) {
-        // TODO: Get the max character length.
+        String word = null;
+
         if (participant.isHuman()) {
-            System.out.println(String.format("%s, voer een woord in.", participant.getName()));
-            String word = System.console().readLine();
-
-            return new Game(word);
-
+            word = readWord(participant);
         } else {
-            // TODO: Get the max character length.
-            String word = this.getRandomWord();
-            return new Game(word);
+            word = this.getRandomWord();
         }
+
+        return new Game(word.toUpperCase(), participant);
     }
 
     private String getRandomWord() {
@@ -56,12 +58,34 @@ public class Match {
         List<String> words = null;
 
         try {
-            words = Files.readAllLines(new File("woordenlijst_12.txt").toPath());
+            words = Files.readAllLines(
+                    new File(String.format("assets/woordenlijst_%s.txt", this.chosenWordLength)).toPath());
         } catch (IOException e) {
-            System.err.println("Something went wrong trying to read the woordenlijst file. Are you sure it's in the right place?");
+            System.err.println(
+                    "Something went wrong trying to read the woordenlijst file. Are you sure its in the right place?");
             e.printStackTrace();
         }
 
         return words;
+    }
+
+    private String readWord(Player participant) {
+        String word = null;
+
+        System.out.println(String.format("%s, voer een woord in.", participant.getName()));
+
+        while (word == null) {
+            String potentialWord = System.console().readLine();
+
+            if (potentialWord.length() == this.chosenWordLength) {
+                word = potentialWord;
+            } else {
+                System.out.println(String.format(
+                        "Het gekozen woord voldoet niet aan de eisen. Zorg dat het woord %s characters is. Probeer het opnieuw.",
+                        chosenWordLength));
+            }
+        }
+
+        return word;
     }
 }
