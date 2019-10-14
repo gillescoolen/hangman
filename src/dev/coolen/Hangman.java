@@ -1,11 +1,12 @@
 package dev.coolen;
+
 /**
  * This class contains the main game loop. 
  * Hangman is able to create play multiple matches.
  */
 public class Hangman {
 
-    public void start() {
+    public void initialize() {
         System.out.println("");
         System.out.println("");
         System.out.println("");
@@ -14,21 +15,27 @@ public class Hangman {
         System.out.println("Wanneer je het woord in minder beurten dan je tegenstander raadt, heb je gewonnen!");
 
         System.out.println("");
+
+        System.out.println("Speler 1, voer je naam in.");
+        Player player = this.createPlayer();
+        System.out.println(String.format("Welkom, %s!", player.name()));
+
+        System.out.println("");
+
+        System.out.println("Speler 2, voer je naam in.");
+        Player opponent = this.createPlayer();
+        System.out.println(String.format("Welkom, %s!", opponent.name()));
+
         System.out.println("");
         System.out.println("");
-        
+        System.out.println("");
+        Match match = new Match(player, opponent);
+        match.start();
     }
 
     private Player createPlayer() {
-        System.out.println("Player, enter your name:");
-        
-        String playerName = System.console().readLine();
-        
-        if (playerName.equalsIgnoreCase("c")) {
-            // Player is a robot.
-            return new PlayerComputer(playerName);
-        } else {
-            return new PlayerHuman(playerName);
-        }
+        String name = System.console().readLine();
+
+        return name.equalsIgnoreCase("c") ? new PlayerComputer(name) : new PlayerHuman(name);
     }
 }
