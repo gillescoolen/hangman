@@ -7,5 +7,5 @@ public interface Player {
     String getName();
     boolean isHuman();
 
-    void play();
+    String play();
 }

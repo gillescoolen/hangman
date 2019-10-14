@@ -34,7 +34,17 @@ public class Hangman {
     }
 
     private Player createPlayer() {
-        String name = System.console().readLine();
+        String name = null;
+
+        while (name == null) {
+            String potentialName = System.console().readLine();
+
+            if (potentialName.length() != 0) {
+                name = potentialName;
+            } else {
+                System.out.println("Voer aljeblieft een naam in.");
+            }
+        }
 
         return name.equalsIgnoreCase("c") ? new PlayerComputer(name) : new PlayerHuman(name);
     }

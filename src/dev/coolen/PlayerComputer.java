@@ -1,5 +1,7 @@
 package dev.coolen;
 
+import java.util.Random;
+
 /**
  * PlayerComputer represents a computer.
  */
@@ -14,8 +16,8 @@ public class PlayerComputer implements Player {
     }
 
     @Override
-    public void play() {
-        // Do computer stuff
+    public String play() {
+        return stupid();
     }
 
     @Override
@@ -26,5 +28,12 @@ public class PlayerComputer implements Player {
     @Override
     public boolean isHuman() {
         return false;
+    }
+
+    private String stupid() {
+        Random r = new Random();
+        String guess = String.valueOf((char) (r.nextInt(26) + 'a')).toUpperCase();
+        System.out.println(guess);
+        return guess;
     }
 }

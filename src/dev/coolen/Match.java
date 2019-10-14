@@ -22,9 +22,9 @@ public class Match {
     }
 
     public void create() {
-        Game playerGame = this.createGame(this.player);
-        Game opponentGame = this.createGame(this.opponent);
-        
+        Game playerGame = this.createGame(this.player, this.opponent);
+        Game opponentGame = this.createGame(this.opponent, this.player);
+
         Random random = new Random();
 
         if (random.nextInt(1) == 0) {
@@ -36,7 +36,7 @@ public class Match {
         }
     }
 
-    private Game createGame(Player participant) {
+    private Game createGame(Player participant, Player opponent) {
         String word = null;
 
         if (participant.isHuman()) {
@@ -45,7 +45,7 @@ public class Match {
             word = this.getRandomWord();
         }
 
-        return new Game(word.toUpperCase(), participant);
+        return new Game(word.toUpperCase(), opponent);
     }
 
     private String getRandomWord() {

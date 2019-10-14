@@ -14,8 +14,8 @@ public class PlayerHuman implements Player {
     }
 
     @Override
-    public void play() {
-        // Ask the human to play something.
+    public String play() {
+        return System.console().readLine().toUpperCase();
     }
 
     @Override
