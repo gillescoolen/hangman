@@ -41,14 +41,12 @@ public class Match {
         System.out.println("Het spel is voorbij!");
 
         if (playerGuesses > OpponentGuesses) {
-            announceWinner(this.player, playerGuesses);
+            return announceWinner(this.player, playerGuesses);
         } else if (playerGuesses < OpponentGuesses) {
             return announceWinner(this.opponent, OpponentGuesses);
         } else {
             return announceWinner(null, 0);
         }
-
-        return false;
     }
 
     private Game createGame(Player participant, Player opponent) {
@@ -89,11 +87,9 @@ public class Match {
         List<String> words = null;
 
         try {
-            words = Files.readAllLines(
-                    new File(String.format("assets/woordenlijst_%s.txt", this.chosenWordLength)).toPath());
+            words = Files.readAllLines(new File(String.format("assets/woordenlijst_%s.txt", this.chosenWordLength)).toPath());
         } catch (IOException e) {
-            System.err.println(
-                    "Something went wrong trying to read the woordenlijst file. Are you sure its in the right place?");
+            System.err.println("Er is iets misgegaan met het uitlezen van de woordenlijst. Staat deze op de juiste plek ( ./assets/ )? ");
             e.printStackTrace();
         }
 
@@ -111,9 +107,7 @@ public class Match {
             if (potentialWord.length() == this.chosenWordLength) {
                 word = potentialWord;
             } else {
-                System.out.println(String.format(
-                        "Het gekozen woord voldoet niet aan de eisen. Zorg dat het woord %s characters is. Probeer het opnieuw.",
-                        chosenWordLength));
+                System.out.println(String.format("Het gekozen woord voldoet niet aan de eisen. Zorg dat het woord %s characters is. Probeer het opnieuw.", chosenWordLength));
             }
         }
 

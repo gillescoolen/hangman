@@ -25,15 +25,14 @@ public class Game {
     public Integer start() {
         System.out.println(word);
 
-        while (guesses < 10 && hiddenWord.contains("*")) {
+        while (this.guesses < 10 && hiddenWord.contains("*")) {
             this.printStatus();
 
             String guess = this.guess();
-            String hiddenWord = this.generateHiddenWord(guess);            
+            String hiddenWord = this.generateHiddenWord(guess);
 
             if (this.hiddenWord.equals(hiddenWord)) {
-                guesses++;
-                showLives(guesses);
+                this.guesses++;
             } else {
                 this.hiddenWord = hiddenWord;
             }
@@ -42,12 +41,12 @@ public class Game {
                 System.out.println("Je hebt het woord geraden!" + word);
             }
 
-            if (guesses == 10) {
+            if (this.guesses == 10) {
                 System.out.println("Je hebt het woord niet kunnen raden. Helaas!");
             }
         }
 
-        return guesses;
+        return this.guesses;
     }
 
     private String guess() {
@@ -56,7 +55,9 @@ public class Game {
         while (guess == null) {
             String potentialGuess = this.challenger.play();
 
-            if (!this.guessedCharacters.contains(potentialGuess)) {
+            if (potentialGuess.length() != 1) {
+                System.out.println("Voer alsjeblieft een letter in.");
+            } else if (!this.guessedCharacters.contains(potentialGuess)) {
                 guess = potentialGuess;
                 this.guessedCharacters.add(potentialGuess);
             } else {
@@ -67,14 +68,14 @@ public class Game {
         return guess;
     }
 
+    /**
+     * Add an asterix when the guess is wrong.
+     * Add the letter when the guess is right.
+     * Replace the hidden word with the new one.
+     */
     private String generateHiddenWord(String guess) {
         String hiddenWord = "";
 
-        /**
-         * Add an asterix when the guess is wrong.guess
-         * Add the letter when the guess is right.
-         * Replace the hidden word with the new one.
-         */
         for (int i = 0; i < this.word.length(); i++) {
             if (this.word.charAt(i) == guess.charAt(0)) {
                 hiddenWord += guess.charAt(0);
@@ -89,7 +90,7 @@ public class Game {
     }
 
     private void printStatus() {
-        System.out.println(hiddenWord);
+        System.out.println(hiddenWord); // ! Remove
         System.out.println("");
         System.out.println("");
         System.out.println(String.format("%s, raad een letter in het woord.", this.challenger.getName()));
@@ -99,9 +100,12 @@ public class Game {
         for (String letter : this.guessedCharacters) {
             System.out.print(letter);
         }
-        
+
+        System.out.println("");
+        this.showLives(this.guesses);
         System.out.println("");
         System.out.println("");
+        System.out.println(String.format("%s is aan het spelen...", this.challenger.getName()));
     }
 
     private void showLives(Integer lives) {
