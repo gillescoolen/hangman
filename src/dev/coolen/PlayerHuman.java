@@ -1,13 +1,12 @@
 package dev.coolen;
 
+/**
+ * PlayerHuman represents a human player.
+ */
 public class PlayerHuman implements Player {
-    /**
-     * PlayerHuman represents a human player.
-     */
-
     private String name;
 
-    /**
+    /** 
      * @param name
      */
     public PlayerHuman(String name) {
@@ -20,7 +19,7 @@ public class PlayerHuman implements Player {
     }
 
     @Override
-    public String name() {
+    public String getName() {
         return this.name;
     }
 

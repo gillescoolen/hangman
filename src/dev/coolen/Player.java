@@ -4,7 +4,8 @@ package dev.coolen;
  * Player
  */
 public interface Player {
-    String name();
+    String getName();
     boolean isHuman();
+
     void play();
 }

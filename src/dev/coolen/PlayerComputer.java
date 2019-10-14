@@ -4,7 +4,6 @@ package dev.coolen;
  * PlayerComputer represents a computer.
  */
 public class PlayerComputer implements Player {
-
     private String name;
 
     /**
@@ -20,10 +19,9 @@ public class PlayerComputer implements Player {
     }
 
     @Override
-    public String name() {
+    public String getName() {
         return this.name;
     }
-
 
     @Override
     public boolean isHuman() {

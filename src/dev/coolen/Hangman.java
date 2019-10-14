@@ -18,13 +18,13 @@ public class Hangman {
 
         System.out.println("Speler 1, voer je naam in.");
         Player player = this.createPlayer();
-        System.out.println(String.format("Welkom, %s!", player.name()));
+        System.out.println(String.format("Welkom, %s!", player.getName()));
 
         System.out.println("");
 
         System.out.println("Speler 2, voer je naam in.");
         Player opponent = this.createPlayer();
-        System.out.println(String.format("Welkom, %s!", opponent.name()));
+        System.out.println(String.format("Welkom, %s!", opponent.getName()));
 
         System.out.println("");
         System.out.println("");
