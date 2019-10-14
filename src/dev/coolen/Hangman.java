@@ -53,30 +53,23 @@ public class Hangman {
         Integer length = null;
 
         while (length == null) {
-            String potentialLength = System.console().readLine();
 
-            switch (potentialLength) {
-            case "10":
-                length = 10;
-                break;
-            case "11":
-                length = 11;
+            try {
+                Integer potentialLength = Integer.parseInt(System.console().readLine());
 
-                break;
-            case "12":
-                length = 12;
+                if (potentialLength >= 10 && potentialLength <= 13) {
+                    length = potentialLength;
+                } else {
+                    System.out.println("Kies alsjeblieft een nummer tussen 10 t/m 13");
+                }
 
-                break;
-            case "13":
-                length = 13;
-                break;
-            default:
-                System.out.println("Vul alsjeblieft een nummer tussen 10 t/m 13 in.");
-                break;
+            } catch (Exception e) {
+                System.out.println("Kies alsjeblieft een nummer tussen 10 t/m 13");
             }
         }
 
         return length;
+
     }
 
     private void printWhiteSpace(Integer amount) {
