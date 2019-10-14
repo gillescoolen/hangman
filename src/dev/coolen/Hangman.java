@@ -7,34 +7,33 @@ package dev.coolen;
 public class Hangman {
 
     public void initialize() {
-        this.printWhiteSpace(50);
-        System.out.println("Welkom bij galgje!");
-        System.out.println("Bij dit spel moet je het woord van de tegenstander raden.");
-        System.out.println("Wanneer je het woord in minder beurten dan je tegenstander raadt, heb je gewonnen!");
-        System.out.println("Allereerst kiezen we de lengte van de woorden. Er mag gekozen worden uit 10 t/m 13.");
+        Boolean playing = true;
 
-        Integer length = this.setWordLength();
-        System.out.println(String.format("De geselecteerde lengte is %s.", length));
+        while (playing) {
+            this.printWhiteSpace(100);
+            System.out.println("Welkom bij galgje!");
+            System.out.println("Bij dit spel moet je het woord van de tegenstander raden.");
+            System.out.println("Wanneer je het woord in minder beurten dan je tegenstander raadt, heb je gewonnen!");
+            System.out.println("Allereerst kiezen we de lengte van de woorden. Er mag gekozen worden uit 10 t/m 13.");
 
-        this.printWhiteSpace(20);
+            Integer length = this.setWordLength();
+            System.out.println(String.format("De geselecteerde lengte is %s.", length));
 
-        System.out.println("Speler 1, voer je naam in.");
-        Player player = this.createPlayer();
-        System.out.println(String.format("Welkom, %s!", player.getName()));
+            Player player = this.createPlayer("Speler 1, voer je naam in.", "CPU - James");
+            Player opponent = this.createPlayer("Speler 2, voer je naam in.", "CPU - Gary");
 
-        this.printWhiteSpace(20);
+            this.printWhiteSpace(50);
+            Match match = new Match(player, opponent, length);
 
-        System.out.println("Speler 2, voer je naam in.");
-        Player opponent = this.createPlayer();
-        System.out.println(String.format("Welkom, %s!", opponent.getName()));
-
-        this.printWhiteSpace(20);
-        Match match = new Match(player, opponent, length);
-        match.create();
+            playing = match.create();
+        }
     }
 
-    private Player createPlayer() {
+    private Player createPlayer(String message, String alternativeName) {
         String name = null;
+
+        this.printWhiteSpace(20);
+        System.out.println(message);
 
         while (name == null) {
             String potentialName = System.console().readLine();
@@ -46,7 +45,7 @@ public class Hangman {
             }
         }
 
-        return name.equalsIgnoreCase("c") ? new PlayerComputer(name) : new PlayerHuman(name);
+        return name.equalsIgnoreCase("c") ? new PlayerComputer(alternativeName) : new PlayerHuman(name);
     }
 
     private Integer setWordLength() {

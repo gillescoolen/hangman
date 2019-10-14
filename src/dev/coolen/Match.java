@@ -21,19 +21,34 @@ public class Match {
         this.chosenWordLength = chosenWordLength;
     }
 
-    public void create() {
+    public Boolean create() {
         Game playerGame = this.createGame(this.player, this.opponent);
         Game opponentGame = this.createGame(this.opponent, this.player);
 
+        Integer playerGuesses = 0;
+        Integer OpponentGuesses = 0;
+
         Random random = new Random();
 
-        if (random.nextInt(1) == 0) {
-            playerGame.start();
-            opponentGame.start();
+        if (random.nextBoolean()) {
+            playerGuesses = playerGame.start();
+            OpponentGuesses = opponentGame.start();
         } else {
-            opponentGame.start();
-            playerGame.start();
+            OpponentGuesses = opponentGame.start();
+            playerGuesses = playerGame.start();
         }
+
+        System.out.println("Het spel is voorbij!");
+
+        if (playerGuesses > OpponentGuesses) {
+            announceWinner(this.player, playerGuesses);
+        } else if (playerGuesses < OpponentGuesses) {
+            return announceWinner(this.opponent, OpponentGuesses);
+        } else {
+            return announceWinner(null, 0);
+        }
+
+        return false;
     }
 
     private Game createGame(Player participant, Player opponent) {
@@ -46,6 +61,22 @@ public class Match {
         }
 
         return new Game(word.toUpperCase(), opponent);
+    }
+
+    private boolean announceWinner(Player participant, Integer guesses) {
+        if (participant == null) {
+            System.out.println("Het is gelijkspel!");
+        } else {
+            System.out.println(String.format("%s heeft gewonnen met een score van: %d!", participant.getName(), guesses));
+        }
+
+        System.out.println("Willen jullie nog eens spelen? Y/N");
+        String response = System.console().readLine();
+        if (response.equalsIgnoreCase("y") || response.equalsIgnoreCase("yes") || response.equalsIgnoreCase("ja")) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private String getRandomWord() {

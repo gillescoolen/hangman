@@ -8,28 +8,28 @@ import java.util.List;
  */
 public class Game {
     private String word;
-    private String hiddenWord;
+    private String hiddenWord = "";
     private Player challenger;
-    private Integer guesses;
-    private List<String> guessedCharacters;
+    private Integer guesses = 0;
+    private List<String> guessedCharacters = new ArrayList<String>();
 
     public Game(String word, Player challenger) {
         this.word = word;
-        this.guesses = 0;
         this.challenger = challenger;
-        this.guessedCharacters = new ArrayList<String>();
-        this.hiddenWord = new String(new char[word.length()]).replace("\0", "*");
+
+        for (int i = 0; i < word.length(); i++) {
+            this.hiddenWord += "*";
+        }
     }
 
-    public void start() {
+    public Integer start() {
         System.out.println(word);
 
         while (guesses < 10 && hiddenWord.contains("*")) {
-            System.out.println(hiddenWord);
-
             this.printStatus();
+
             String guess = this.guess();
-            String hiddenWord = this.generateHiddenWord(guess);
+            String hiddenWord = this.generateHiddenWord(guess);            
 
             if (this.hiddenWord.equals(hiddenWord)) {
                 guesses++;
@@ -37,10 +37,17 @@ public class Game {
             } else {
                 this.hiddenWord = hiddenWord;
             }
+
             if (hiddenWord.equals(word)) {
                 System.out.println("Je hebt het woord geraden!" + word);
             }
+
+            if (guesses == 10) {
+                System.out.println("Je hebt het woord niet kunnen raden. Helaas!");
+            }
         }
+
+        return guesses;
     }
 
     private String guess() {
@@ -64,7 +71,7 @@ public class Game {
         String hiddenWord = "";
 
         /**
-         * Add an asterix when the guess is wrong.
+         * Add an asterix when the guess is wrong.guess
          * Add the letter when the guess is right.
          * Replace the hidden word with the new one.
          */
@@ -82,11 +89,18 @@ public class Game {
     }
 
     private void printStatus() {
-        System.out.println(String.format("Raad een letter in het woord.", this.challenger.getName()));
+        System.out.println(hiddenWord);
+        System.out.println("");
+        System.out.println("");
+        System.out.println(String.format("%s, raad een letter in het woord.", this.challenger.getName()));
+        System.out.println(String.format("Progress tot nu toe: %s.", this.hiddenWord));
         System.out.print("Gebruikte letters tot nu toe: ");
+
         for (String letter : this.guessedCharacters) {
             System.out.print(letter);
         }
+        
+        System.out.println("");
         System.out.println("");
     }
 
