@@ -38,7 +38,7 @@ public class Game {
                 this.hiddenWord = hiddenWord;
             }
             if (hiddenWord.equals(word)) {
-                System.out.println("Correct! You win! The word was " + word);
+                System.out.println("Je hebt het woord geraden!" + word);
             }
         }
     }
@@ -82,7 +82,7 @@ public class Game {
     }
 
     private void printStatus() {
-        System.out.println("Raad een letter in het woord.");
+        System.out.println(String.format("Raad een letter in het woord.", this.challenger.getName()));
         System.out.print("Gebruikte letters tot nu toe: ");
         for (String letter : this.guessedCharacters) {
             System.out.print(letter);
@@ -129,9 +129,6 @@ public class Game {
             break;
         case 1:
             System.out.println("\n" + "\n" + "\n" + "\n" + "\n" + "|_ _");
-            break;
-        case 0:
-            System.out.println("Check if this is needed");
             break;
         default:
             break;
