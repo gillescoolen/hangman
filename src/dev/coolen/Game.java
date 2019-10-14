@@ -2,20 +2,23 @@ package dev.coolen;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  *  A game consists of a single word. This word is the one the opponent should guess.
  */
 public class Game {
     private String word;
-    private String hiddenWord = "";
+    private Scanner scanner;
     private Player challenger;
     private Integer guesses = 0;
+    private String hiddenWord = "";
     private List<String> guessedCharacters = new ArrayList<String>();
 
-    public Game(String word, Player challenger) {
+    public Game(String word, Player challenger, Scanner scanner) {
         this.word = word;
         this.challenger = challenger;
+        this.scanner = scanner;
 
         for (int i = 0; i < word.length(); i++) {
             this.hiddenWord += "*";
@@ -53,7 +56,7 @@ public class Game {
         String guess = null;
 
         while (guess == null) {
-            String potentialGuess = this.challenger.play();
+            String potentialGuess = this.challenger.play(this.scanner);
 
             if (potentialGuess.length() != 1) {
                 System.out.println("Voer alsjeblieft een letter in.");

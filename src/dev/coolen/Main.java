@@ -1,9 +1,12 @@
 package dev.coolen;
 
+import java.util.Scanner;
+
 public class Main {
 
     public static void main(String[] args) {
-        var hangman = new Hangman();
+        Scanner scanner = new Scanner(System.in);
+        var hangman = new Hangman(scanner);
         hangman.initialize();
     }
 }

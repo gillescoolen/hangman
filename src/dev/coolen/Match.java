@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.List;
 import java.util.Random;
+import java.util.Scanner;
 
 /**
  * This class contains a single match.
@@ -13,11 +14,13 @@ import java.util.Random;
 public class Match {
     private Player player;
     private Player opponent;
+    private Scanner scanner;
     private Integer chosenWordLength;
 
-    public Match(Player player, Player opponent, Integer chosenWordLength) {
+    public Match(Player player, Player opponent, Integer chosenWordLength, Scanner scanner) {
         this.player = player;
         this.opponent = opponent;
+        this.scanner = scanner;
         this.chosenWordLength = chosenWordLength;
     }
 
@@ -58,7 +61,7 @@ public class Match {
             word = this.getRandomWord();
         }
 
-        return new Game(word.toUpperCase(), opponent);
+        return new Game(word.toUpperCase(), opponent, this.scanner);
     }
 
     private boolean announceWinner(Player participant, Integer guesses) {
@@ -69,7 +72,7 @@ public class Match {
         }
 
         System.out.println("Willen jullie nog eens spelen? Y/N");
-        String response = System.console().readLine();
+        String response = scanner.nextLine();
         if (response.equalsIgnoreCase("y") || response.equalsIgnoreCase("yes") || response.equalsIgnoreCase("ja")) {
             return true;
         } else {
@@ -102,7 +105,7 @@ public class Match {
         System.out.println(String.format("%s, voer een woord in.", participant.getName()));
 
         while (word == null) {
-            String potentialWord = System.console().readLine();
+            String potentialWord = scanner.nextLine();
 
             if (potentialWord.length() == this.chosenWordLength) {
                 word = potentialWord;

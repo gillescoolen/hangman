@@ -1,5 +1,7 @@
 package dev.coolen;
 
+import java.util.Scanner;
+
 /**
  * PlayerHuman represents a human player.
  */
@@ -14,8 +16,8 @@ public class PlayerHuman implements Player {
     }
 
     @Override
-    public String play() {
-        return System.console().readLine().toUpperCase();
+    public String play(Scanner scanner) {
+        return scanner.nextLine().toUpperCase();
     }
 
     @Override

@@ -1,6 +1,7 @@
 package dev.coolen;
 
 import java.util.Random;
+import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -17,7 +18,7 @@ public class PlayerComputer implements Player {
     }
 
     @Override
-    public String play() {
+    public String play(Scanner scanner) {
         return stupid();
     }
 

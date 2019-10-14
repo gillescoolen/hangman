@@ -1,14 +1,21 @@
 package dev.coolen;
 
+import java.util.Scanner;
+
 /**
  * This class contains the main game loop. 
  * Hangman is able to create play multiple matches.
  */
 public class Hangman {
+    private Scanner scanner;
+
+    public Hangman(Scanner scanner) {
+        this.scanner = scanner;
+    }
 
     public void initialize() {
         Boolean playing = true;
-
+        
         while (playing) {
             this.printWhiteSpace(100);
             System.out.println("Welkom bij galgje!");
@@ -23,7 +30,7 @@ public class Hangman {
             Player opponent = this.createPlayer("Speler 2, voer je naam in.", "CPU - Gary");
 
             this.printWhiteSpace(50);
-            Match match = new Match(player, opponent, length);
+            Match match = new Match(player, opponent, length, scanner);
 
             playing = match.create();
         }
@@ -36,7 +43,7 @@ public class Hangman {
         System.out.println(message);
 
         while (name == null) {
-            String potentialName = System.console().readLine();
+            String potentialName = scanner.nextLine();
 
             if (potentialName.length() != 0) {
                 name = potentialName;
@@ -54,7 +61,7 @@ public class Hangman {
         while (length == null) {
 
             try {
-                Integer potentialLength = Integer.parseInt(System.console().readLine());
+                Integer potentialLength = Integer.parseInt(scanner.nextLine());
 
                 if (potentialLength >= 10 && potentialLength <= 13) {
                     length = potentialLength;
@@ -76,4 +83,6 @@ public class Hangman {
             System.out.println("");
         }
     }
+
+    
 }
