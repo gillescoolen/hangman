@@ -8,5 +8,6 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         var hangman = new Hangman(scanner);
         hangman.initialize();
+        scanner.close();
     }
 }

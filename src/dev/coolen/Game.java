@@ -56,7 +56,7 @@ public class Game {
         String guess = null;
 
         while (guess == null) {
-            String potentialGuess = this.challenger.play(this.scanner);
+            String potentialGuess = this.challenger.play(this.scanner, this.guessedCharacters);
 
             if (potentialGuess.length() != 1) {
                 System.out.println("Voer alsjeblieft een letter in.");
@@ -93,7 +93,6 @@ public class Game {
     }
 
     private void printStatus() {
-        System.out.println(hiddenWord); // ! Remove
         System.out.println("");
         System.out.println("");
         System.out.println(String.format("%s, raad een letter in het woord.", this.challenger.getName()));

@@ -1,5 +1,6 @@
 package dev.coolen;
 
+import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
@@ -18,8 +19,8 @@ public class PlayerComputer implements Player {
     }
 
     @Override
-    public String play(Scanner scanner) {
-        return stupid();
+    public String play(Scanner scanner, List<String> letters) {
+        return stupid(letters);
     }
 
     @Override
@@ -31,8 +32,9 @@ public class PlayerComputer implements Player {
     public boolean isHuman() {
         return false;
     }
+
     // Replace with a smarter version of the guessing algorithm.
-    private String stupid() {
+    private String stupid(List<String> letters) {
         Random random = new Random();
 
         try {
@@ -41,6 +43,14 @@ public class PlayerComputer implements Player {
             System.err.println(e.getMessage());
         }
 
-        return String.valueOf((char) (random.nextInt(26) + 'a')).toUpperCase();
+        String guess = null;
+
+        while (guess == null) {
+            String potentialGuess = String.valueOf((char) (random.nextInt(26) + 'a')).toUpperCase();
+
+            guess = (!letters.contains(potentialGuess)) ? potentialGuess : null;
+        }
+
+        return guess;
     }
 }
