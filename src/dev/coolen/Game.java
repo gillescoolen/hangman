@@ -14,6 +14,7 @@ public class Game {
     private Integer guesses = 0;
     private String hiddenWord = "";
     private List<String> guessedCharacters = new ArrayList<String>();
+    private String[] lives = { "", "\n" + "|\n" + "|\n" + "|\n" + "|\n" + "|_ _", "—————\n" + "|\n" + "|\n" + "|\n" + "|\n" + "|____", "—————\n" + "|/\n" + "|\n" + "|\n" + "|\n" + "|____", "—————\n" + "|/  |\n" + "|   0\n" + "|\n" + "|\n" + "|____", "—————\n" + "|/  |\n" + "|   0\n" + "|   |\n" + "|\n" + "|____", "—————\n" + "|/  |\n" + "|   0\n" + "|  /|\n" + "|\n" + "|____", "—————\n" + "|/  |\n" + "|   0\n" + "|  /|\\ \n" + "|\n" + "|____", "—————\n" + "|/  |\n" + "|   0\n" + "|  /|\\ \n" + "|\n" + "|____", "—————\n" + "|/  |\n" + "|   0\n" + "|  /|\\ \n" + "|  /\n" + "|____", "—————\n" + "|/  |\n" + "|   0\n" + "|  /|\\ \n" + "|  / \\ \n" + "|____" };
 
     public Game(String word, Player challenger, Scanner scanner) {
         this.word = word;
@@ -46,6 +47,9 @@ public class Game {
 
             if (this.guesses == 10) {
                 System.out.println("Je hebt het woord niet kunnen raden. Helaas!");
+                this.showLives(this.guesses);
+                System.out.println("");
+                System.out.println(String.format("Het woord was: %s", this.word));
             }
         }
 
@@ -110,48 +114,7 @@ public class Game {
         System.out.println(String.format("%s is aan het spelen...", this.challenger.getName()));
     }
 
-    private void showLives(Integer lives) {
-        switch (lives) {
-        case 10:
-            System.out.println("—————\n" + "|/  |\n" + "|   0\n" + "|  /|\\ \n" + "|  / \\ \n" + "|____");
-            break;
-        case 9:
-            System.out.println("—————\n" + "|/  |\n" + "|   0\n" + "|  /|\\ \n" + "|  /\n" + "|____");
-
-            break;
-        case 8:
-            System.out.println("—————\n" + "|/  |\n" + "|   0\n" + "|  /|\\ \n" + "|\n" + "|____");
-
-            break;
-        case 7:
-            System.out.println("—————\n" + "|/  |\n" + "|   0\n" + "|  /|\n" + "|\n" + "|____");
-
-            break;
-        case 6:
-            System.out.println("—————\n" + "|/  |\n" + "|   0\n" + "|   |\n" + "|\n" + "|____");
-
-            break;
-        case 5:
-            System.out.println("—————\n" + "|/  |\n" + "|   0\n" + "|\n" + "|\n" + "|____");
-
-            break;
-        case 4:
-            System.out.println("—————\n" + "|/\n" + "|\n" + "|\n" + "|\n" + "|____");
-
-            break;
-        case 3:
-            System.out.println("—————\n" + "|\n" + "|\n" + "|\n" + "|\n" + "|____");
-
-            break;
-        case 2:
-            System.out.println("\n" + "|\n" + "|\n" + "|\n" + "|\n" + "|_ _");
-
-            break;
-        case 1:
-            System.out.println("\n" + "\n" + "\n" + "\n" + "\n" + "|_ _");
-            break;
-        default:
-            break;
-        }
+    private void showLives(Integer guesses) {
+        System.out.println(this.lives[guesses]);
     }
 }
