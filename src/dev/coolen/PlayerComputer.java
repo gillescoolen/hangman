@@ -36,6 +36,7 @@ public class PlayerComputer implements Player {
     // Replace with a smarter version of the guessing algorithm.
     private String stupid(List<String> letters) {
         Random random = new Random();
+        String guess = null;
 
         try {
             TimeUnit.MILLISECONDS.sleep(random.nextInt(2000) + 1000);
@@ -43,7 +44,6 @@ public class PlayerComputer implements Player {
             System.err.println(e.getMessage());
         }
 
-        String guess = null;
 
         while (guess == null) {
             String potentialGuess = String.valueOf((char) (random.nextInt(26) + 'a')).toUpperCase();
