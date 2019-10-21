@@ -15,4 +15,8 @@ public class PlayerHuman extends Player {
     public String play(Scanner scanner, List<String> letters) {
         return scanner.nextLine().toUpperCase();
     }
+
+     public String givePositions(String guess) {
+        return "";
+    }
 }

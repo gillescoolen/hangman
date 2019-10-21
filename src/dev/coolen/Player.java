@@ -18,4 +18,7 @@ public abstract class Player {
     }
 
     abstract public String play(Scanner scanner, List<String> letters);
+
+    abstract public String givePositions(String guess);
+
 }

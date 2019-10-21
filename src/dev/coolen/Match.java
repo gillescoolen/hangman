@@ -33,6 +33,7 @@ public class Match {
 
         Random random = new Random();
 
+        // Choose a random game to start with.
         if (random.nextBoolean()) {
             playerGuesses = playerGame.start();
             OpponentGuesses = opponentGame.start();

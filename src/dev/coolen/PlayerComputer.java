@@ -25,4 +25,9 @@ public class PlayerComputer extends Player {
 
         return guess;
     }
+
+    public String givePositions(String guess) {
+        return "";
+    }
+
 }

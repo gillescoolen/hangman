@@ -9,8 +9,8 @@ import java.util.Scanner;
 public class Hangman {
     private Scanner scanner;
 
-    public Hangman(Scanner scanner) {
-        this.scanner = scanner;
+    public Hangman() {
+        this.scanner = new Scanner(System.in);;
     }
 
     public void initialize() {
@@ -26,13 +26,12 @@ public class Hangman {
             Integer length = this.setWordLength();
             System.out.println(String.format("De geselecteerde lengte is %s.", length));
 
-            Player player = this.createPlayer("Speler 1, voer je naam in.", "CPU - James");
-            Player opponent = this.createPlayer("Speler 2, voer je naam in.", "CPU - Gary");
+            Player player = this.createPlayer("Geef de naam van speler 1 (of een C voor een computer):", "CPU - James");
+            Player opponent = this.createPlayer("Geef de naam van speler 2 (of een C voor een computer):", "CPU - Gary");
 
             this.printWhiteSpace(50);
-            Match match = new Match(player, opponent, length, scanner);
-
-            playing = match.create();
+            
+            new Match(player, opponent, length, scanner).create();
         }
     }
 

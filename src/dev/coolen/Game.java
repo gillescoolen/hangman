@@ -21,13 +21,14 @@ public class Game {
         this.challenger = challenger;
         this.scanner = scanner;
 
+        // Set the hiddenword.
         for (int i = 0; i < word.length(); i++) {
             this.hiddenWord += "*";
         }
     }
 
     public Integer start() {
-        System.out.println(word);
+        System.out.println(word); // TODO: Remove this line before submission.
 
         while (this.guesses < 10 && hiddenWord.contains("*")) {
             this.printStatus();
@@ -35,21 +36,21 @@ public class Game {
             String guess = this.guess();
             String hiddenWord = this.generateHiddenWord(guess);
 
+            // When the hiddenword hasn't changes, add faulty guess to the counter.
             if (this.hiddenWord.equals(hiddenWord)) {
                 this.guesses++;
             } else {
+                // When the hiddenword has changed, set the new hiddenword.
                 this.hiddenWord = hiddenWord;
             }
 
+            // When the hiddenword equals the full word. ( When the asteriks are gone )
             if (hiddenWord.equals(word)) {
                 System.out.println("Je hebt het woord geraden!" + word);
-            }
-
-            if (this.guesses == 10) {
+            } else if (this.guesses == 10) {
                 System.out.println("Je hebt het woord niet kunnen raden. Helaas!");
                 this.showLives(this.guesses);
-                System.out.println("");
-                System.out.println(String.format("Het woord was: %s", this.word));
+                System.out.println(String.format("Het woord was: %s.", this.word));
             }
         }
 
@@ -97,10 +98,8 @@ public class Game {
     }
 
     private void printStatus() {
-        System.out.println("");
-        System.out.println("");
-        System.out.println(String.format("%s, raad een letter in het woord.", this.challenger.getName()));
-        System.out.println(String.format("Progress tot nu toe: %s.", this.hiddenWord));
+        System.out.println(this.hiddenWord);
+
         System.out.print("Gebruikte letters tot nu toe: ");
 
         for (String letter : this.guessedCharacters) {
@@ -108,10 +107,8 @@ public class Game {
         }
 
         System.out.println("");
+
         this.showLives(this.guesses);
-        System.out.println("");
-        System.out.println("");
-        System.out.println(String.format("%s is aan het spelen...", this.challenger.getName()));
     }
 
     private void showLives(Integer guesses) {
