@@ -21,7 +21,7 @@ public class Hangman {
             System.out.println("Bij dit spel moet je het woord van de tegenstander raden.");
             System.out.println("Allereerst kiezen we de lengte van de woorden. Er mag gekozen worden uit 10 t/m 13.");
 
-            Integer length = this.setWordLength();
+            Integer length = this.configureWordLength();
             System.out.println(String.format("De geselecteerde lengte is %s.", length));
 
             Player player = this.createPlayer("Geef de naam van speler 1 (of een C voor een computer):", "CPU - James");
@@ -52,7 +52,7 @@ public class Hangman {
         return name.equalsIgnoreCase("c") ? new PlayerComputer(alternativeName, this.scanner) : new PlayerHuman(name, this.scanner);
     }
 
-    private Integer setWordLength() {
+    private Integer configureWordLength() {
         Integer length = null;
 
         while (length == null) {
