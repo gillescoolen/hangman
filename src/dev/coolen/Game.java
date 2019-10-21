@@ -56,7 +56,7 @@ public class Game {
             // When the hiddenword equals the full word. ( When the asteriks are gone )
             if (hiddenWord.equals(this.word)) {
                 System.out.println("Je hebt het woord geraden!");
-                System.out.println(String.format("Het woord was: ", this.word));
+                System.out.println(String.format("Het woord was: %s.", this.word));
             }
         }
 
