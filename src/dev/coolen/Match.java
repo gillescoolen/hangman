@@ -53,16 +53,16 @@ public class Match {
         }
     }
 
-    private Game createGame(Player participant, Player opponent) {
+    private Game createGame(Player player, Player opponent) {
         String word = null;
 
-        if (participant instanceof PlayerHuman) {
-            word = readWord(participant);
+        if (player instanceof PlayerHuman) {
+            word = readWord(player);
         } else {
             word = this.getRandomWord();
         }
 
-        return new Game(word.toUpperCase(), opponent, this.scanner);
+        return new Game(word.toUpperCase(), player, opponent);
     }
 
     private boolean announceWinner(Player participant, Integer guesses) {
