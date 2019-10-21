@@ -29,6 +29,7 @@ public class Game {
 
     public Integer start() {
         System.out.println(word); // TODO: Remove this line before submission.
+        System.out.println(String.format("Het is de beurt aan: %s", this.opponent.getName()));
 
         while (this.guesses < 10 && hiddenWord.contains(".")) {
             this.printStatus();
@@ -95,8 +96,7 @@ public class Game {
 
             // Validate each position.
             for (Integer position : positions) {
-                if (positions.size() == count && position <= this.word.length()
-                        && String.valueOf(this.word.charAt(position)).equalsIgnoreCase(guess)) {
+                if (positions.size() == count && position <= this.word.length() && String.valueOf(this.word.charAt(position)).equalsIgnoreCase(guess)) {
                     verifiedPositions.add(position);
                 } else {
                     System.out.println("Geef alstublieft de juiste posities.");

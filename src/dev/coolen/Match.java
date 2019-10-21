@@ -42,8 +42,6 @@ public class Match {
             playerGuesses = playerGame.start();
         }
 
-        System.out.println("Het spel is voorbij!");
-
         if (playerGuesses > OpponentGuesses) {
             return announceWinner(this.player, playerGuesses);
         } else if (playerGuesses < OpponentGuesses) {
@@ -69,7 +67,7 @@ public class Match {
         if (participant == null) {
             System.out.println("Het is gelijkspel!");
         } else {
-            System.out.println(String.format("%s heeft gewonnen met een score van: %d!", participant.getName(), 10 - guesses));
+            System.out.println(participant.getName() + " heeft gewonnen met een score van: " + (10 - guesses));
         }
 
         System.out.println("Willen jullie nog eens spelen? Y/N");

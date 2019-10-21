@@ -37,8 +37,8 @@ public class PlayerHuman extends Player {
             // Validate input. Player has been asked to enter positions.
             String potentialPositions = this.scanner.nextLine();
 
-            if (potentialPositions.equals("*")) {
-                return positions;
+            if (potentialPositions.equals("*") && !word.contains(guess.toUpperCase())) {
+                    return positions;
             }
 
             try {
