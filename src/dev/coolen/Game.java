@@ -2,35 +2,43 @@ package dev.coolen;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  *  A game consists of a single word. This word is the one the opponent should guess.
  */
 public class Game {
     private String word;
-    private Scanner scanner;
-    private Player challenger;
+    private Player player;
+    private Player opponent;
     private Integer guesses = 0;
     private String hiddenWord = "";
     private List<String> guessedCharacters = new ArrayList<String>();
-    private String[] lives = { "", "\n" + "|\n" + "|\n" + "|\n" + "|\n" + "|_ _", "—————\n" + "|\n" + "|\n" + "|\n" + "|\n" + "|____", "—————\n" + "|/\n" + "|\n" + "|\n" + "|\n" + "|____", "—————\n" + "|/  |\n" + "|   0\n" + "|\n" + "|\n" + "|____", "—————\n" + "|/  |\n" + "|   0\n" + "|   |\n" + "|\n" + "|____", "—————\n" + "|/  |\n" + "|   0\n" + "|  /|\n" + "|\n" + "|____", "—————\n" + "|/  |\n" + "|   0\n" + "|  /|\\ \n" + "|\n" + "|____", "—————\n" + "|/  |\n" + "|   0\n" + "|  /|\\ \n" + "|\n" + "|____", "—————\n" + "|/  |\n" + "|   0\n" + "|  /|\\ \n" + "|  /\n" + "|____", "—————\n" + "|/  |\n" + "|   0\n" + "|  /|\\ \n" + "|  / \\ \n" + "|____" };
+    private List<String> wrongCharacters = new ArrayList<String>();
+    private String[] lives = { "", "\n" + "|\n" + "|\n" + "|\n" + "|\n" + "|_ _",
+            "—————\n" + "|\n" + "|\n" + "|\n" + "|\n" + "|____", "—————\n" + "|/\n" + "|\n" + "|\n" + "|\n" + "|____",
+            "—————\n" + "|/  |\n" + "|   0\n" + "|\n" + "|\n" + "|____",
+            "—————\n" + "|/  |\n" + "|   0\n" + "|   |\n" + "|\n" + "|____",
+            "—————\n" + "|/  |\n" + "|   0\n" + "|  /|\n" + "|\n" + "|____",
+            "—————\n" + "|/  |\n" + "|   0\n" + "|  /|\\ \n" + "|\n" + "|____",
+            "—————\n" + "|/  |\n" + "|   0\n" + "|  /|\\ \n" + "|\n" + "|____",
+            "—————\n" + "|/  |\n" + "|   0\n" + "|  /|\\ \n" + "|  /\n" + "|____",
+            "—————\n" + "|/  |\n" + "|   0\n" + "|  /|\\ \n" + "|  / \\ \n" + "|____" };
 
-    public Game(String word, Player challenger, Scanner scanner) {
+    public Game(String word, Player player, Player challenger) {
         this.word = word;
-        this.challenger = challenger;
-        this.scanner = scanner;
+        this.player = player;
+        this.opponent = challenger;
 
         // Set the hiddenword.
         for (int i = 0; i < word.length(); i++) {
-            this.hiddenWord += "*";
+            this.hiddenWord += ".";
         }
     }
 
     public Integer start() {
         System.out.println(word); // TODO: Remove this line before submission.
 
-        while (this.guesses < 10 && hiddenWord.contains("*")) {
+        while (this.guesses < 10 && hiddenWord.contains(".")) {
             this.printStatus();
 
             String guess = this.guess();
@@ -39,18 +47,22 @@ public class Game {
             // When the hiddenword hasn't changes, add faulty guess to the counter.
             if (this.hiddenWord.equals(hiddenWord)) {
                 this.guesses++;
+                this.wrongCharacters.add(guess);
             } else {
                 // When the hiddenword has changed, set the new hiddenword.
                 this.hiddenWord = hiddenWord;
             }
 
-            // When the hiddenword equals the full word. ( When the asteriks are gone )
-            if (hiddenWord.equals(word)) {
-                System.out.println("Je hebt het woord geraden!" + word);
-            } else if (this.guesses == 10) {
+            // If the oppent has guessed 10 times
+            if (this.guesses == 10) {
                 System.out.println("Je hebt het woord niet kunnen raden. Helaas!");
                 this.showLives(this.guesses);
                 System.out.println(String.format("Het woord was: %s.", this.word));
+            }
+
+            // When the hiddenword equals the full word. ( When the asteriks are gone )
+            if (hiddenWord.equals(word)) {
+                System.out.println("Je hebt het woord geraden!" + word);
             }
         }
 
@@ -61,7 +73,7 @@ public class Game {
         String guess = null;
 
         while (guess == null) {
-            String potentialGuess = this.challenger.play(this.scanner, this.guessedCharacters);
+            String potentialGuess = this.opponent.play(this.guessedCharacters);
 
             if (potentialGuess.length() != 1) {
                 System.out.println("Voer alsjeblieft een letter in.");
@@ -71,6 +83,9 @@ public class Game {
             } else {
                 System.out.println("Deze letter is al een keer geraden, probeer het opnieuw.");
             }
+
+            // Ask player for input if the potential guess is correct.
+            this.player.validateGuess(guess);
         }
 
         return guess;
@@ -87,10 +102,10 @@ public class Game {
         for (int i = 0; i < this.word.length(); i++) {
             if (this.word.charAt(i) == guess.charAt(0)) {
                 hiddenWord += guess.charAt(0);
-            } else if (this.hiddenWord.charAt(i) != '*') {
+            } else if (this.hiddenWord.charAt(i) != '.') {
                 hiddenWord += this.word.charAt(i);
             } else {
-                hiddenWord += "*";
+                hiddenWord += ".";
             }
         }
 
@@ -100,13 +115,13 @@ public class Game {
     private void printStatus() {
         System.out.println(this.hiddenWord);
 
-        System.out.print("Gebruikte letters tot nu toe: ");
+        System.out.print(String.format("Aantal fouten: %s", this.wrongCharacters.size()));
 
+        System.out.print(" (");
         for (String letter : this.guessedCharacters) {
             System.out.print(letter);
         }
-
-        System.out.println("");
+        System.out.println(")");
 
         this.showLives(this.guesses);
     }
