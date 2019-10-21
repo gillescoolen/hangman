@@ -1,5 +1,6 @@
 package dev.coolen;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
@@ -20,16 +21,23 @@ public class PlayerComputer extends Player {
         while (guess == null) {
             String potentialGuess = String.valueOf((char) (random.nextInt(26) + 'a')).toUpperCase();
 
+            // Set guess when the letter hasn't been guessed yet.
             guess = (!letters.contains(potentialGuess)) ? potentialGuess : null;
         }
-
-        System.out.println(String.format("De computer raadt een: %s. Op welke plaats(en) staat die letter? ", guess));
 
         return guess;
     }
 
-    public String validateGuess(String guess) {
-        return "";
-    }
+    public List<Integer> givePositions(String guess, String word) {
+        List<Integer> positions = new ArrayList<Integer>();
 
+        for (int i = 0; i < word.length(); i++) {
+            if (String.valueOf(word.charAt(i)).equalsIgnoreCase(guess)) {
+                // When the character position is equal to the guessed character.
+                positions.add(i);
+            }
+        }
+
+        return positions;
+    }
 }

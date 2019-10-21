@@ -10,17 +10,15 @@ public class Hangman {
     private Scanner scanner;
 
     public Hangman() {
-        this.scanner = new Scanner(System.in);;
+        this.scanner = new Scanner(System.in);
     }
 
     public void initialize() {
         Boolean playing = true;
         
         while (playing) {
-            this.printWhiteSpace(100);
             System.out.println("Welkom bij galgje!");
             System.out.println("Bij dit spel moet je het woord van de tegenstander raden.");
-            System.out.println("Wanneer je het woord in minder beurten dan je tegenstander raadt, heb je gewonnen!");
             System.out.println("Allereerst kiezen we de lengte van de woorden. Er mag gekozen worden uit 10 t/m 13.");
 
             Integer length = this.setWordLength();
@@ -29,16 +27,16 @@ public class Hangman {
             Player player = this.createPlayer("Geef de naam van speler 1 (of een C voor een computer):", "CPU - James");
             Player opponent = this.createPlayer("Geef de naam van speler 2 (of een C voor een computer):", "CPU - Gary");
 
-            this.printWhiteSpace(50);
-            
-            new Match(player, opponent, length, scanner).create();
+            playing = new Match(player, opponent, length, scanner).create();
         }
+
+        System.out.println("Bedankt voor het spelen van Galgje.");
+        System.out.println("Hopelijk tot een volgende keer!");
     }
 
     private Player createPlayer(String message, String alternativeName) {
         String name = null;
 
-        this.printWhiteSpace(20);
         System.out.println(message);
 
         while (name == null) {
@@ -47,7 +45,7 @@ public class Hangman {
             if (potentialName.length() != 0) {
                 name = potentialName;
             } else {
-                System.out.println("Voer aljeblieft een naam in.");
+                System.out.println("Voer alsjeblieft een naam in.");
             }
         }
 
@@ -74,14 +72,5 @@ public class Hangman {
         }
 
         return length;
-
     }
-
-    private void printWhiteSpace(Integer amount) {
-        for (int i = 0; i < amount; i++) {
-            System.out.println("");
-        }
-    }
-
-    
 }

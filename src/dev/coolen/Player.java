@@ -13,7 +13,6 @@ public abstract class Player {
     public Player(String name, Scanner scanner) {
         this.name = name;
         this.scanner = scanner;
-
     }
 
     public String getName() {
@@ -22,6 +21,6 @@ public abstract class Player {
 
     abstract public String play(List<String> letters);
 
-    abstract public String validateGuess(String guess);
+    abstract public List<Integer> givePositions(String guess, String word);
 
 }

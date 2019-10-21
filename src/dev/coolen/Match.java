@@ -61,8 +61,8 @@ public class Match {
         } else {
             word = this.getRandomWord();
         }
-
         return new Game(word.toUpperCase(), player, opponent);
+
     }
 
     private boolean announceWinner(Player participant, Integer guesses) {
@@ -73,7 +73,9 @@ public class Match {
         }
 
         System.out.println("Willen jullie nog eens spelen? Y/N");
+
         String response = scanner.nextLine();
+
         if (response.equalsIgnoreCase("y") || response.equalsIgnoreCase("yes") || response.equalsIgnoreCase("ja")) {
             return true;
         } else {
@@ -94,7 +96,6 @@ public class Match {
             words = Files.readAllLines(new File(String.format("assets/woordenlijst_%s.txt", this.chosenWordLength)).toPath());
         } catch (IOException e) {
             System.err.println("Er is iets misgegaan met het uitlezen van de woordenlijst. Staat deze op de juiste plek ( ./assets/ )? ");
-            e.printStackTrace();
         }
 
         return words;
@@ -108,10 +109,10 @@ public class Match {
         while (word == null) {
             String potentialWord = scanner.nextLine();
 
-            if (potentialWord.length() == this.chosenWordLength) {
+            if (potentialWord.length() == this.chosenWordLength && potentialWord.matches("[a-zA-Z]+")) {
                 word = potentialWord;
             } else {
-                System.out.println(String.format("Het gekozen woord voldoet niet aan de eisen. Zorg dat het woord %s characters is. Probeer het opnieuw.", chosenWordLength));
+                System.out.println(String.format("Het gekozen woord voldoet niet aan de eisen. Zorg dat het woord %s letters is. Probeer het opnieuw.", chosenWordLength));
             }
         }
 

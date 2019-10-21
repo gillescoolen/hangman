@@ -14,15 +14,7 @@ public class Game {
     private String hiddenWord = "";
     private List<String> guessedCharacters = new ArrayList<String>();
     private List<String> wrongCharacters = new ArrayList<String>();
-    private String[] lives = { "", "\n" + "|\n" + "|\n" + "|\n" + "|\n" + "|_ _",
-            "—————\n" + "|\n" + "|\n" + "|\n" + "|\n" + "|____", "—————\n" + "|/\n" + "|\n" + "|\n" + "|\n" + "|____",
-            "—————\n" + "|/  |\n" + "|   0\n" + "|\n" + "|\n" + "|____",
-            "—————\n" + "|/  |\n" + "|   0\n" + "|   |\n" + "|\n" + "|____",
-            "—————\n" + "|/  |\n" + "|   0\n" + "|  /|\n" + "|\n" + "|____",
-            "—————\n" + "|/  |\n" + "|   0\n" + "|  /|\\ \n" + "|\n" + "|____",
-            "—————\n" + "|/  |\n" + "|   0\n" + "|  /|\\ \n" + "|\n" + "|____",
-            "—————\n" + "|/  |\n" + "|   0\n" + "|  /|\\ \n" + "|  /\n" + "|____",
-            "—————\n" + "|/  |\n" + "|   0\n" + "|  /|\\ \n" + "|  / \\ \n" + "|____" };
+    private String[] lives = { "\n" + "\n" + "\n" + "\n" + "\n" + "|_ _", "\n" + "|\n" + "|\n" + "|\n" + "|\n" + "|_ _", "—————\n" + "|\n" + "|\n" + "|\n" + "|\n" + "|____", "—————\n" + "|/\n" + "|\n" + "|\n" + "|\n" + "|____", "—————\n" + "|/  |\n" + "|   0\n" + "|\n" + "|\n" + "|____", "—————\n" + "|/  |\n" + "|   0\n" + "|   |\n" + "|\n" + "|____", "—————\n" + "|/  |\n" + "|   0\n" + "|  /|\n" + "|\n" + "|____", "—————\n" + "|/  |\n" + "|   0\n" + "|  /|\\ \n" + "|\n" + "|____", "—————\n" + "|/  |\n" + "|   0\n" + "|  /|\\ \n" + "|\n" + "|____", "—————\n" + "|/  |\n" + "|   0\n" + "|  /|\\ \n" + "|  /\n" + "|____", "—————\n" + "|/  |\n" + "|   0\n" + "|  /|\\ \n" + "|  / \\ \n" + "|____" };
 
     public Game(String word, Player player, Player challenger) {
         this.word = word;
@@ -61,8 +53,9 @@ public class Game {
             }
 
             // When the hiddenword equals the full word. ( When the asteriks are gone )
-            if (hiddenWord.equals(word)) {
-                System.out.println("Je hebt het woord geraden!" + word);
+            if (hiddenWord.equals(this.word)) {
+                System.out.println("Je hebt het woord geraden!");
+                System.out.println(String.format("Het woord was: ", this.word));
             }
         }
 
@@ -79,16 +72,41 @@ public class Game {
                 System.out.println("Voer alsjeblieft een letter in.");
             } else if (!this.guessedCharacters.contains(potentialGuess)) {
                 guess = potentialGuess;
-                this.guessedCharacters.add(potentialGuess);
+
+                this.validateGuess(guess);
             } else {
                 System.out.println("Deze letter is al een keer geraden, probeer het opnieuw.");
             }
-
-            // Ask player for input if the potential guess is correct.
-            this.player.validateGuess(guess);
         }
 
         return guess;
+    }
+
+    private void validateGuess(String guess) {
+        Boolean validated = false;
+        List<Integer> verifiedPositions = new ArrayList<Integer>();
+        Integer count = this.word.length() - this.word.replaceAll(guess, "").length();
+
+        System.out.println(String.format("%s raadt een: %s. Op welke plaats(en) staat die letter? ", this.opponent.getName(), guess));
+
+        while (!validated) {
+            // Ask player for input if the potential guess is correct.
+            List<Integer> positions = this.player.givePositions(guess, word);
+
+            // Validate each position.
+            for (Integer position : positions) {
+                if (positions.size() == count && position <= this.word.length()
+                        && String.valueOf(this.word.charAt(position)).equalsIgnoreCase(guess)) {
+                    verifiedPositions.add(position);
+                } else {
+                    System.out.println("Geef alstublieft de juiste posities.");
+                    verifiedPositions.clear();
+                }
+            }
+            validated = (verifiedPositions.size() == positions.size()) ? true : false;
+        }
+
+        this.guessedCharacters.add(guess);
     }
 
     /**
@@ -118,7 +136,7 @@ public class Game {
         System.out.print(String.format("Aantal fouten: %s", this.wrongCharacters.size()));
 
         System.out.print(" (");
-        for (String letter : this.guessedCharacters) {
+        for (String letter : this.wrongCharacters) {
             System.out.print(letter);
         }
         System.out.println(")");
