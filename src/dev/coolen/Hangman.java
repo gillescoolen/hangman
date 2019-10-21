@@ -51,7 +51,7 @@ public class Hangman {
             }
         }
 
-        return name.equalsIgnoreCase("c") ? new PlayerComputer(alternativeName) : new PlayerHuman(name);
+        return name.equalsIgnoreCase("c") ? new PlayerComputer(alternativeName, this.scanner) : new PlayerHuman(name, this.scanner);
     }
 
     private Integer setWordLength() {

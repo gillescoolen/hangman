@@ -9,11 +9,11 @@ import java.util.Scanner;
  */
 public class PlayerComputer extends Player {
 
-    public PlayerComputer(String name) {
-        super(name);
+    public PlayerComputer(String name, Scanner scanner) {
+        super(name, scanner);
     }
 
-    public String play(Scanner scanner, List<String> letters) {
+    public String play(List<String> letters) {
         Random random = new Random();
         String guess = null;
 
@@ -23,10 +23,12 @@ public class PlayerComputer extends Player {
             guess = (!letters.contains(potentialGuess)) ? potentialGuess : null;
         }
 
+        System.out.println(String.format("De computer raadt een: %s. Op welke plaats(en) staat die letter? ", guess));
+
         return guess;
     }
 
-    public String givePositions(String guess) {
+    public String validateGuess(String guess) {
         return "";
     }
 

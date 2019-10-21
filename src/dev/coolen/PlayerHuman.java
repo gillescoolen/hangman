@@ -8,15 +8,16 @@ import java.util.Scanner;
  */
 public class PlayerHuman extends Player {
 
-    public PlayerHuman(String name) {
-        super(name);
+    public PlayerHuman(String name, Scanner scanner) {
+        super(name, scanner);
     }
 
-    public String play(Scanner scanner, List<String> letters) {
+    public String play(List<String> letters) {
         return scanner.nextLine().toUpperCase();
     }
 
-     public String givePositions(String guess) {
+    public String validateGuess(String guess) {
+        System.out.println();
         return "";
     }
 }
