@@ -3,13 +3,19 @@ package dev.coolen;
 import java.util.List;
 import java.util.Scanner;
 
-
 /**
  * Player
  */
-public interface Player {
-    String getName();
-    boolean isHuman();
+public abstract class Player {
+    private String name;
 
-    String play(Scanner scanner, List<String> letters);
+    public Player(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    abstract public String play(Scanner scanner, List<String> letters);
 }

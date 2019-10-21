@@ -6,28 +6,13 @@ import java.util.Scanner;
 /**
  * PlayerHuman represents a human player.
  */
-public class PlayerHuman implements Player {
-    private String name;
+public class PlayerHuman extends Player {
 
-    /** 
-     * @param name
-     */
     public PlayerHuman(String name) {
-        this.name = name;
+        super(name);
     }
 
-    @Override
     public String play(Scanner scanner, List<String> letters) {
         return scanner.nextLine().toUpperCase();
-    }
-
-    @Override
-    public String getName() {
-        return this.name;
-    }
-
-    @Override
-    public boolean isHuman() {
-        return true;
     }
 }

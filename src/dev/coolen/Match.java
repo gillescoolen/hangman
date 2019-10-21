@@ -55,7 +55,7 @@ public class Match {
     private Game createGame(Player participant, Player opponent) {
         String word = null;
 
-        if (participant.isHuman()) {
+        if (participant instanceof PlayerHuman) {
             word = readWord(participant);
         } else {
             word = this.getRandomWord();
